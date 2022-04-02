@@ -13,13 +13,15 @@
 
 #----- Imports
 from __future__ import annotations
-from typing import Optional
+from textwrap import wrap
+from typing import ClassVar, Dict, Tuple, Optional
 
 import requests
 
 from .config import DUDeConfig
 from . import exceptions
 
+from functools import wraps
 
 #----- Globals
 
@@ -28,24 +30,106 @@ from . import exceptions
 
 
 #----- Class
-class DUDeLib:
-    """Python library to interact with the DUDe API server"""
+class Client:
+    """Singleton class to access the DUDe server"""
 
-    def __init__(self, config: DUDeConfig) -> None:
-        """Constructor"""
-        self.config = config
+    # only one instance of this class is available
+    __instance: ClassVar[Optional[Client]] = None
+
+    def __new__(cls: Client) -> Client:
+        """Create a new instance of the class or return the current one"""
+        if cls.__instance is None:
+            cls.__instance = object.__new__(cls)
+            cls.__instance._setup()
+
+        return cls.__instance
+
+    def _setup(self) -> None:
+        """Method called to initialize the instance after its creation"""
+        # configuration
+        self._config = DUDeConfig()
+
+        # mapping HTTP error code and exceptions
+        self.error_map: Dict[int, Exception] = {
+
+            400: exceptions.BadRequest,
+            401: exceptions.Unauthenticated,
+            403: exceptions.Forbidden,
+            404: exceptions.NotFound,
+            500: exceptions.InternalServerError,
+
+            999: exceptions.UnknownError
+        }
+
+    @property
+    def config(self) -> DUDeConfig:
+        """Retrieve the current DUDeConfig object"""
+        return self._config
+
+    @config.setter
+    def config(self, config: DUDeConfig) -> None:
+        """Set the current DUDeConfig object"""
+        self._config = config
+
+    def exception(self, value) -> Exception:
+        """Retrieve the proper exception corresponding to the HTTP error
+
+        Args:
+            value: the HTTP error
+
+        Returns:
+            An exception
+        """
+        return self.error_map.get(value, 999)
 
 
-    def version(self) -> Optional[str]:
-        endpoint = f"{self.config.scheme}://{self.config.hostname}:{self.config.port}/version"
+    def url(self, endpoint: str) -> str:
+        """Return the proper URL to connect to the specified endpoint
 
-        try:
-            response = requests.get(endpoint, verify=self.config.root_ca)
-            if response.status_code != 200:
-                return None
-            else:
-                data = response.json()
-                return data['version']
+        Args:
+            endpoint: the endpoint to connect to
 
-        except Exception as e:
-            raise exceptions.ConnectionError(e)
+        Returns:
+            the complete URL to use to connect to the endpoint
+        """
+        return f"{self._config.scheme}://{self._config.hostname}:{self._config.port}/{endpoint}"
+
+    def verify(self) -> Optional[str]:
+        """Check the SSL parameter
+
+        Returns:
+            None if we are not using SSL, the /path/to/certificate otherwise
+        """
+        if self._config.root_ca != '':
+            return self._config.root_ca
+        else:
+            return None
+
+    def cert(self) -> Optional[Tuple[str, str]]:
+        """Check if a client SSL certificate should be used
+
+        Returns:
+            A Tuple with the certificate and the key for this client, None otherwise
+        """
+        if (self._config.certfile != '') and (self._config.keyfile != ''):
+            return (self._config.certfile, self._config.keyfile)
+        else:
+            return None
+
+    @staticmethod
+    def route(route):
+        """Decorator to define endpoints"""
+        def decorate(fn):
+
+            @wraps(fn)
+            def wrapper(*args, **kwargs):
+                # add the client instance at the beginning of each functions
+                return fn(Client(), *args, **kwargs)
+
+            # add the function to the client namespace
+            setattr(Client(), route, wrapper)
+
+            return wrapper
+        return decorate
+
+
