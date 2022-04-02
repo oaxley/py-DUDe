@@ -18,3 +18,6 @@ from .config import DUDeConfig
 from . import exceptions
 from . import endpoints
 
+
+#----- Globals
+__version__ = "1.0.0"
