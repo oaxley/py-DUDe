@@ -27,7 +27,16 @@ from pyDUDe.config import (
 )
 
 
+#----- Types
+T_Company = Dict[str, Any]
+
+
 #----- Functions
+
+#
+# All companies
+#
+
 @Client.endpoint
 def createCompany(client: Client, *, name: str) -> int:
     """Create a new company
@@ -43,13 +52,13 @@ def createCompany(client: Client, *, name: str) -> int:
         The Id of the new company
     """
     # URL & body for the request
-    url = client.url('companies')
+    url = client._url('companies')
     body = {
         'name': name
     }
 
     try:
-        response = requests.post(url, json=body, headers=client.headers(), verify=client.verify(), cert=client.cert())
+        response = client._post(url, body)
         data = response.json()
 
     except Exception as e:
@@ -59,11 +68,11 @@ def createCompany(client: Client, *, name: str) -> int:
         return int(data['id'])
 
     # raise the proper exception depending on the status code
-    exception = client.exception(response.status_code)
+    exception = client._exception(response.status_code)
     raise exception(data['error']['message'])
 
 @Client.endpoint
-def getAllCompanies(client: Client, *, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[Dict[str, Any]]:
+def getAllCompanies(client: Client, *, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Company]:
     """Retrieve all the companies
 
     Args:
@@ -78,7 +87,7 @@ def getAllCompanies(client: Client, *, limit = DEFAULT_SEARCH_LIMIT) -> Iterator
         An iterator to a Company object
     """
     offset = 1
-    url = client.url('companies')
+    url = client._url('companies')
 
     if limit > MAX_SEARCH_LIMIT:
         limit = MAX_SEARCH_LIMIT
@@ -91,7 +100,7 @@ def getAllCompanies(client: Client, *, limit = DEFAULT_SEARCH_LIMIT) -> Iterator
         }
 
         try:
-            response = requests.get(url, params=params, headers=client.headers(), verify=client.verify(), cert=client.cert())
+            response = client._get(url, params)
             data = response.json()
 
         except Exception as e:
@@ -108,6 +117,133 @@ def getAllCompanies(client: Client, *, limit = DEFAULT_SEARCH_LIMIT) -> Iterator
 
         else:
             # raise the proper exception depending on the status code
-            exception = client.exception(response.status_code)
+            exception = client._exception(response.status_code)
             raise exception(data['error']['message'])
 
+@Client.endpoint
+def deleteAllCompanies(client: Client) -> bool:
+    """Delete all the companies and their children
+
+    Args:
+        client: the Client instance
+
+    Raises:
+        ConnectionError, InternalServerError
+
+    Returns:
+        True if all the companies have been deleted
+    """
+    try:
+        response = client._delete(client._url('companies'))
+
+    except Exception as e:
+        raise exceptions.ConnectionError(e)
+
+    if response.status_code == 204:
+        return True
+
+    # raise the proper exception depending on the status code
+    exception = client._exception(response.status_code)
+    data = response.json()
+    raise exception(data['error']['message'])
+
+
+#
+# Specific company
+#
+
+@Client.endpoint
+def getSingleCompany(client: Client, *, company_id: int) -> T_Company:
+    """Retrieve details for a specific company
+
+    Args:
+        client: the Client instance
+        company_id: ID of the company
+
+    Raises:
+        ConnectionError, NotFound, InternalServerError
+
+    Returns:
+        The detail for the company
+    """
+    url = client._url('companies', path=f"{company_id}")
+
+    try:
+        response = client._get(url)
+        data = response.json()
+
+    except Exception as e:
+        raise exceptions.ConnectionError(e)
+
+    if response.status_code == 200:
+        return data
+
+    # raise the proper exception depending on the status code
+    exception = client._exception(response.status_code)
+    raise exception(data['error']['message'])
+
+
+@Client.endpoint
+def updateSingleCompany(client: Client, *, name: str, company_id: int) -> bool:
+    """Update details for a specific company
+
+    Args:
+        client: the Client instance
+        name: the new name for this company
+        company_id: ID of the company
+
+    Raises:
+        ConnectionError, BadRequest, NotFound, InternalServerError
+
+    Returns:
+        True if the record has been updated
+    """
+    url = client._url('companies', path=f"{company_id}")
+    body = {
+        'name': name
+    }
+
+    try:
+        response = client._put(url, body)
+
+    except Exception as e:
+        raise exceptions.ConnectionError(e)
+
+    if response.status_code == 204:
+        return True
+
+    # raise the proper exception depending on the status code
+    exception = client._exception(response.status_code)
+    data = response.json()
+    raise exception(data['error']['message'])
+
+
+@Client.endpoint
+def deleteSingleCompany(client: Client, *, company_id: int) -> bool:
+    """Delete a single company
+
+    Args:
+        client: the Client instance
+        company_id: ID of the company
+
+    Raises:
+        ConnectionError, NotFound, InternalServerError
+
+    Returns:
+        True if the company has been deleted
+    """
+    url = client._url('companies', path=f"{company_id}")
+
+    try:
+        response = client._delete(url)
+
+    except Exception as e:
+        raise exceptions.ConnectionError(e)
+
+    if response.status_code == 204:
+        return True
+
+    # raise the proper exception depending on the status code
+    exception = client._exception(response.status_code)
+    data = response.json()
+    raise exception(data['error']['message'])
