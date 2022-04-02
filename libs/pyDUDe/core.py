@@ -117,19 +117,16 @@ class Client:
             return None
 
     @staticmethod
-    def route(route):
+    def endpoint(fn):
         """Decorator to define endpoints"""
-        def decorate(fn):
+        @wraps(fn)
+        def wrapper(*args, **kwargs):
+            # add the client instance at the beginning of each functions
+            return fn(Client(), *args, **kwargs)
 
-            @wraps(fn)
-            def wrapper(*args, **kwargs):
-                # add the client instance at the beginning of each functions
-                return fn(Client(), *args, **kwargs)
+        # add the function to the client namespace
+        setattr(Client(), fn.__name__, wrapper)
 
-            # add the function to the client namespace
-            setattr(Client(), route, wrapper)
-
-            return wrapper
-        return decorate
+        return wrapper
 
 
