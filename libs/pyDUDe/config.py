@@ -21,6 +21,11 @@ from attrs import define
 from dotenv import dotenv_values
 
 
+#----- Globals
+MAX_SEARCH_LIMIT: int = 20      # value maximum for search operation
+DEFAULT_SEARCH_LIMIT: int = 10  # default value for search operation
+
+
 #----- Class
 @define(kw_only=True)
 class DUDeConfig:
