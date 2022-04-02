@@ -12,11 +12,5 @@
 # @brief	pyDUDe endpoints init file
 
 #----- Imports
-
-from .generic import (
-    version, authenticate, validate
-)
-
-from .company import (
-    createCompany
-)
+from . import generic
+from . import company
