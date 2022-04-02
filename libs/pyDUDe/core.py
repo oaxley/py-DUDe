@@ -108,6 +108,18 @@ class Client:
         else:
             return None
 
+    def headers(self) -> Dict[str, str]:
+        """Add necessary headers
+
+        Returns:
+            A dictionary that can be used as a headers in requests
+        """
+        headers = {}
+        if self._config.x_api_token != '':
+            headers['X-API-Token'] = self._config.x_api_token
+
+        return headers
+
     @staticmethod
     def endpoint(fn):
         """Decorator to define endpoints"""
