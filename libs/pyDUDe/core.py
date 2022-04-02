@@ -63,7 +63,7 @@ class Client:
         """Set the current DUDeConfig object"""
         self._config = config
 
-    def exception(self, value) -> Exception:
+    def _exception(self, value) -> Exception:
         """Retrieve the proper exception corresponding to the HTTP error
 
         Args:
@@ -87,6 +87,7 @@ class Client:
         return f"{self._config.scheme}://{self._config.hostname}:{self._config.port}/{endpoint}"
 
     def verify(self) -> Optional[str]:
+    def _verify(self) -> Optional[str]:
         """Check the SSL parameter
 
         Returns:
@@ -97,7 +98,7 @@ class Client:
         else:
             return None
 
-    def cert(self) -> Optional[Tuple[str, str]]:
+    def _cert(self) -> Optional[Tuple[str, str]]:
         """Check if a client SSL certificate should be used
 
         Returns:
@@ -108,7 +109,7 @@ class Client:
         else:
             return None
 
-    def headers(self) -> Dict[str, str]:
+    def _headers(self) -> Dict[str, str]:
         """Add necessary headers
 
         Returns:
