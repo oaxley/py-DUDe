@@ -75,7 +75,7 @@ class Client:
         return self.error_map.get(value, 999)
 
 
-    def url(self, endpoint: str) -> str:
+    def _url(self, endpoint: str, *, path: str = "") -> str:
         """Return the proper URL to connect to the specified endpoint
 
         Args:
@@ -84,9 +84,12 @@ class Client:
         Returns:
             the complete URL to use to connect to the endpoint
         """
-        return f"{self._config.scheme}://{self._config.hostname}:{self._config.port}/{endpoint}"
+        value = f"{self._config.scheme}://{self._config.hostname}:{self._config.port}/{endpoint}"
+        if len(path) > 0:
+            value = f"{value}/{path}"
 
-    def verify(self) -> Optional[str]:
+        return value
+
     def _verify(self) -> Optional[str]:
         """Check the SSL parameter
 
