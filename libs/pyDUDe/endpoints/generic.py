@@ -17,8 +17,9 @@ from typing import Any, Dict, Optional
 
 import requests
 
-from .core import Client
-from . import exceptions
+from pyDUDe import (
+    Client, exceptions
+)
 
 
 #----- Functions

@@ -13,20 +13,12 @@
 
 #----- Imports
 from __future__ import annotations
-from textwrap import wrap
 from typing import ClassVar, Dict, Tuple, Optional
-
-import requests
-
-from .config import DUDeConfig
-from . import exceptions
 
 from functools import wraps
 
-#----- Globals
-
-
-#----- Functions
+from .config import DUDeConfig
+from . import exceptions
 
 
 #----- Class
@@ -128,5 +120,3 @@ class Client:
         setattr(Client(), fn.__name__, wrapper)
 
         return wrapper
-
-

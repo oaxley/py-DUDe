@@ -9,12 +9,10 @@
 # @author	Sebastien LEGRAND
 # @license	Apache License 2.0
 #
-# @brief	pyDUDe package init file
+# @brief	pyDUDe endpoints init file
 
 #----- Imports
-from .core import Client
-from .config import DUDeConfig
 
-from . import exceptions
-from . import endpoints
-
+from .generic import (
+    version, authenticate, validate
+)
