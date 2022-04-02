@@ -135,11 +135,24 @@ class Client:
             params: parameters for the request if any
             body: body data for the request if any
         """
+        # extra arguments for requests
+        kwargs = {
+            'headers': self._headers(),
+            'verify': self._verify(),
+            'cert': self._cert()
+        }
+
         if request == "GET":
-            response = requests.get(url, params, headers=self._headers(), verify=self._verify(), cert=self._cert())
+            response = requests.get(url, params, **kwargs)
 
         elif request == "POST":
-            response = requests.post(url, body, headers=self._headers(), verify=self._verify(), cert=self._cert())
+            response = requests.post(url, json=body, **kwargs)
+
+        elif request == "PUT":
+            response = requests.put(url, json=body, **kwargs)
+
+        elif request == "DELETE":
+            response = requests.delete(url, **kwargs)
 
         else:
             raise ValueError(f"Error: unknown method [{request}] called.")
@@ -154,6 +167,15 @@ class Client:
     def _post(self, url: str = "", body: Dict[str, Any] = {}) -> requests.Response:
         """Execute a HTTP POST request"""
         return self._request(request="POST", url=url, body=body)
+
+    def _put(self, url: str = "", body: Dict[str, Any] = {}) -> requests.Response:
+        """Execute a HTTP PUT request"""
+        return self._request(request="PUT", url=url, body=body)
+
+    def _delete(self, url: str = "") -> requests.Response:
+        """Execute a HTTP PUT request"""
+        return self._request(request="DELETE", url=url)
+
 
     @staticmethod
     def endpoint(fn):
