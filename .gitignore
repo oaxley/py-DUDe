@@ -1,0 +1,12 @@
+**/__pycache__
+
+**/dude.sqlite
+
+**/tmp
+
+# remove all the certificates except the Makefile
+certs/**
+!certs/Makefile
+
+# remove pyenv file
+.python-version
