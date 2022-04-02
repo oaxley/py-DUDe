@@ -22,24 +22,53 @@ from . import exceptions
 
 
 #----- Functions
-@Client.route('version')
-def _version(client: Client) -> Optional[str]:
+@Client.endpoint
+def version(client: Client) -> Optional[str]:
+    """Return the current API version
+
+    Args:
+        client: the Client instance
+
+    Raises:
+        ConnectionError, InternalServerError
+
+    Returns:
+        The API version string
+    """
     url = client.url('version')
 
+    # send the request to the server
     try:
         response = requests.get(url, verify=client.verify(), cert=client.cert())
-        if response.status_code != 200:
-            return None
-        else:
-            data = response.json()
-            return data['version']
+        data = response.json()
 
     except Exception as e:
         raise exceptions.ConnectionError(e)
 
+    # return the API version
+    if response.status_code == 200:
+        return data['version']
 
-@Client.route('authenticate')
-def _authenticate(client: Client, *, appname: str, apikey: str) -> Optional[str]:
+    # raise the proper exception depending on the status code
+    exception = client.exception(response.status_code)
+    raise exception(data['error']['message'])
+
+
+@Client.endpoint
+def authenticate(client: Client, *, appname: str, apikey: str) -> Optional[str]:
+    """Authenticate an application
+
+    Args:
+        client: the Client instance
+        appname: the application name
+        apikey: the application API-KEY
+
+    Raises:
+        ConnectionError, BadRequest, NotFound, InternalServerError
+
+    Returns:
+        The JSON Web Token
+    """
     # URL & body for the request
     url = client.url('auth')
     body = {
@@ -63,8 +92,8 @@ def _authenticate(client: Client, *, appname: str, apikey: str) -> Optional[str]
     raise exception(data['error']['message'])
 
 
-@Client.route('validate')
-def _validate(client: Client, *, email: str, right: str, token: str) -> bool:
+@Client.endpoint
+def validate(client: Client, *, email: str, right: str, token: str) -> bool:
     """Validate a user for a specific right
 
     Args:
@@ -73,6 +102,8 @@ def _validate(client: Client, *, email: str, right: str, token: str) -> bool:
         token: the JWT as returned by the auth endpoint
 
     Raises:
+        ConnectionError, BadRequest, Unauthenticated,
+        NotFound, InternalServerError
 
     Returns:
         True if the user is authorized, False otherwise
