@@ -16,3 +16,7 @@
 from .generic import (
     version, authenticate, validate
 )
+
+from .company import (
+    createCompany
+)
