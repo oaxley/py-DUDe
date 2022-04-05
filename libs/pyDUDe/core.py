@@ -126,7 +126,7 @@ class Client:
 
         return headers
 
-    def _request(self, *, request: str = "", url: str = "", params: Dict[str, Any] = {}, body: Dict[str, Any] = {}) -> requests.Response:
+    def _request(self, *, request: str = "", url: str = "", params: Optional[Dict[str, Any]] = None, body: Dict[str, Any] = {}) -> requests.Response:
         """Execute a request and return the data
 
         Args:
@@ -160,7 +160,7 @@ class Client:
         return response
 
 
-    def _get(self, url: str = "", params: Dict[str, Any] = {}) -> requests.Response:
+    def _get(self, url: str = "", params: Optional[Dict[str, Any]] = None) -> requests.Response:
         """Execute a HTTP GET request"""
         return self._request(request="GET", url=url, params=params)
 
