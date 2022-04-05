@@ -36,11 +36,11 @@ def version(client: Client) -> Optional[str]:
     Returns:
         The API version string
     """
-    url = client.url('version')
+    url = client._url('version')
 
     # send the request to the server
     try:
-        response = requests.get(url, verify=client.verify(), cert=client.cert())
+        response = client._get(url)
         data = response.json()
 
     except Exception as e:
@@ -71,7 +71,7 @@ def authenticate(client: Client, *, appname: str, apikey: str) -> Optional[str]:
         The JSON Web Token
     """
     # URL & body for the request
-    url = client.url('auth')
+    url = client._url('auth')
     body = {
         "name": appname,
         "apikey": apikey
@@ -79,7 +79,7 @@ def authenticate(client: Client, *, appname: str, apikey: str) -> Optional[str]:
 
     # send the request to the server
     try:
-        response = requests.post(url, json=body, verify=client.verify(), cert=client.cert())
+        response = client._post(url, body)
         data = response.json()
     except Exception as e:
         raise exceptions.ConnectionError(e)
@@ -110,7 +110,7 @@ def validate(client: Client, *, email: str, right: str, token: str) -> bool:
         True if the user is authorized, False otherwise
     """
     # URL & body for the request
-    url = client.url("validate")
+    url = client._url("validate")
     body = {
         'email': email,
         'right': right,
@@ -119,7 +119,7 @@ def validate(client: Client, *, email: str, right: str, token: str) -> bool:
 
     # send the request to the server
     try:
-        response = requests.post(url, json=body, verify=client.verify(), cert=client.cert())
+        response = client._post(url, body)
         data = response.json()
     except Exception as e:
         raise exceptions.ConnectionError(e)
