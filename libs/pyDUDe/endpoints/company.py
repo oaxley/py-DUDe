@@ -14,9 +14,6 @@
 #----- Imports
 from __future__ import annotations
 from typing import Any, Dict, List, Optional, Iterator
-from urllib import response
-
-import requests
 
 from pyDUDe import (
     Client, exceptions,
