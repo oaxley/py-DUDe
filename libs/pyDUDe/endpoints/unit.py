@@ -26,7 +26,7 @@ from pyDUDe.config import (
 
 #----- Types
 T_Unit = Dict[str, Any]
-
+T_Team = Dict[str, Any]
 
 
 #----- Functions
@@ -237,6 +237,127 @@ def deleteSingleUnit(client: Client, *, unit_id: int) -> T_Unit:
         True if the unit has been deleted
     """
     url = client._url('units', path=f"{unit_id}")
+
+    try:
+        response = client._delete(url)
+
+    except Exception as e:
+        raise exceptions.ConnectionError(e)
+
+    if response.status_code == 204:
+        return True
+
+    # raise the proper exception depending on the status code
+    exception = client._exception(response.status_code)
+    data = response.json()
+    raise exception(data['error']['message'])
+
+
+#
+# Unit / Teams
+#
+
+@Client.endpoint
+def createUnitTeam(client: Client, *, unit_id: int, name: str) -> int:
+    """Create a new team and associate it with this unit
+
+    Args:
+        client  : the Client instance
+        unit_id : ID of the unit
+        name    : name of the team
+
+    Raises:
+        ConnectionError, BadRequest, NotFound, InternalServerError
+
+    Returns:
+        The ID of the new team
+    """
+    url = client._url('units', path=f"{unit_id}/teams")
+    body = {
+        'name': name
+    }
+
+    try:
+        response = client._post(url, body)
+        data = response.json()
+
+    except Exception as e:
+        raise exceptions.ConnectionError(e)
+
+    if response.status_code == 201:
+        return int(data['id'])
+
+    # raise the proper exception depending on the status code
+    exception = client._exception(response.status_code)
+    raise exception(data['error']['message'])
+
+
+@Client.endpoint
+def getUnitTeams(client: Client, *, unit_id: int, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Team]:
+    """Retrieve all the teams that belongs to a unit
+
+    Args:
+        client  : the Client instance
+        unit_id : ID of the unit
+        limit       : limit the number of records
+
+    Raises:
+        ConnectionError, BadRequest, NotFound, InternalServerError
+
+    Returns:
+        An iterator to a Team object
+    """
+    url = client._url('units', path=f"{unit_id}/teams")
+    offset = 1
+
+    if limit > MAX_SEARCH_LIMIT:
+        limit = MAX_SEARCH_LIMIT
+
+    while True:
+        # prepare the parameters
+        params = {
+            'offset': offset,
+            'limit': limit
+        }
+
+        try:
+            response = client._get(url, params)
+            data = response.json()
+
+        except Exception as e:
+            raise exceptions.ConnectionError(e)
+
+        if response.status_code == 200:
+            for item in data['teams']:
+                yield item
+
+            if int(data['count']) < int(data['limit']):
+                break
+            else:
+                offset += int(data['count'])
+
+        else:
+            # raise the proper exception depending on the status code
+            exception = client._exception(response.status_code)
+            raise exception(data['error']['message'])
+
+
+@Client.endpoint
+def deleteUnitTeams(client: Client, *, unit_id: int) -> bool:
+    """Deelte all the teams that belongs to a unit
+
+    Args:
+        client  : the Client instance
+        unit_id : ID of the unit
+        name    : name of the team
+
+    Raises:
+        ConnectionError, NotFound, InternalServerError
+
+    Returns:
+        True if all the objects have been deleted
+    """
+    url = client._url('units', path=f"{unit_id}/teams")
 
     try:
         response = client._delete(url)
