@@ -13,7 +13,7 @@
 
 #----- Imports
 from __future__ import annotations
-from typing import Any, Dict, List, Iterator
+from typing import Any, Dict, List, Iterator, Optional
 
 from pyDUDe import (
     Client, exceptions,
@@ -135,6 +135,111 @@ def deleteAllUnits(client: Client) -> bool:
     """
     try:
         response = client._delete(client._url('units'))
+
+    except Exception as e:
+        raise exceptions.ConnectionError(e)
+
+    if response.status_code == 204:
+        return True
+
+    # raise the proper exception depending on the status code
+    exception = client._exception(response.status_code)
+    data = response.json()
+    raise exception(data['error']['message'])
+
+#
+# Specific unit
+#
+
+@Client.endpoint
+def getSingleUnit(client: Client, *, unit_id: int) -> T_Unit:
+    """Retrieve details for a specific unit
+
+    Args:
+        client  : the Client instance
+        unit_id : ID of the unit
+
+    Raises:
+        ConnectionError, NotFound, InternalServerError
+
+    Returns:
+        The details for the unit
+    """
+    url = client._url('units', path=f"{unit_id}")
+
+    try:
+        response = client._get(url)
+        data = response.json()
+
+    except Exception as e:
+        raise exceptions.ConnectionError(e)
+
+    if response.status_code == 200:
+        return data
+
+    # raise the proper exception depending on the status code
+    exception = client._exception(response.status_code)
+    raise exception(data['error']['message'])
+
+
+@Client.endpoint
+def updateSingleUnit(client: Client, *, unit_id: int, name: Optional[str] = None, company_id: Optional[int] = None) -> bool:
+    """Update details for a specific unit
+
+    Args:
+        client      : the Client instance
+        unit_id     : ID of the unit
+        name        : the new name for this unit
+        company_id  : the new company ID for this unit
+
+    Raises:
+        ConnectionError, NotFound, InternalServerError
+
+    Returns:
+        True if the unit has been updated
+    """
+    url = client._url('units', path=f"{unit_id}")
+    body = {}
+
+    if name:
+        body['name'] = name
+
+    if company_id:
+        body['company_id'] = company_id
+
+    try:
+        response = client._put(url, body)
+
+    except Exception as e:
+        raise exceptions.ConnectionError(e)
+
+    if response.status_code == 204:
+        return True
+
+    # raise the proper exception depending on the status code
+    exception = client._exception(response.status_code)
+    data = response.json()
+    raise exception(data['error']['message'])
+
+
+@Client.endpoint
+def deleteSingleUnit(client: Client, *, unit_id: int) -> T_Unit:
+    """Delete a specific unit
+
+    Args:
+        client  : the Client instance
+        unit_id : ID of the unit
+
+    Raises:
+        ConnectionError, NotFound, InternalServerError
+
+    Returns:
+        True if the unit has been deleted
+    """
+    url = client._url('units', path=f"{unit_id}")
+
+    try:
+        response = client._delete(url)
 
     except Exception as e:
         raise exceptions.ConnectionError(e)
