@@ -26,6 +26,7 @@ from pyDUDe.config import (
 
 #----- Types
 T_Company = Dict[str, Any]
+T_Unit = Dict[str, Any]
 
 
 #----- Functions
@@ -39,8 +40,8 @@ def createCompany(client: Client, *, name: str) -> int:
     """Create a new company
 
     Args:
-        client: the Client instance
-        name: the name of the new company to create
+        client  : the Client instance
+        name    : the name of the new company to create
 
     Raises:
         BadRequest, InternalServerError
@@ -68,14 +69,14 @@ def createCompany(client: Client, *, name: str) -> int:
     exception = client._exception(response.status_code)
     raise exception(data['error']['message'])
 
+
 @Client.endpoint
 def getAllCompanies(client: Client, *, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Company]:
     """Retrieve all the companies
 
     Args:
-        client: the Client instance
-        offset: the current offset for the search
-        limit: limit the number of records
+        client  : the Client instance
+        limit   : limit the number of records
 
     Raises:
         ConnectionError, BadRequest, InternalServerError
@@ -117,6 +118,7 @@ def getAllCompanies(client: Client, *, limit = DEFAULT_SEARCH_LIMIT) -> Iterator
             exception = client._exception(response.status_code)
             raise exception(data['error']['message'])
 
+
 @Client.endpoint
 def deleteAllCompanies(client: Client) -> bool:
     """Delete all the companies and their children
@@ -154,8 +156,8 @@ def getSingleCompany(client: Client, *, company_id: int) -> T_Company:
     """Retrieve details for a specific company
 
     Args:
-        client: the Client instance
-        company_id: ID of the company
+        client      : the Client instance
+        company_id  : ID of the company
 
     Raises:
         ConnectionError, NotFound, InternalServerError
@@ -185,9 +187,9 @@ def updateSingleCompany(client: Client, *, name: str, company_id: int) -> bool:
     """Update details for a specific company
 
     Args:
-        client: the Client instance
-        name: the new name for this company
-        company_id: ID of the company
+        client      : the Client instance
+        name        : the new name for this company
+        company_id  : ID of the company
 
     Raises:
         ConnectionError, BadRequest, NotFound, InternalServerError
@@ -220,8 +222,8 @@ def deleteSingleCompany(client: Client, *, company_id: int) -> bool:
     """Delete a single company
 
     Args:
-        client: the Client instance
-        company_id: ID of the company
+        client      : the Client instance
+        company_id  : ID of the company
 
     Raises:
         ConnectionError, NotFound, InternalServerError
@@ -284,3 +286,83 @@ def createCompanyUnit(client: Client, *, company_id: int, name: str) -> int:
     exception = client._exception(response.status_code)
     raise exception(data['error']['message'])
 
+
+@Client.endpoint
+def getCompanyUnits(client: Client, *, company_id: int, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Unit]:
+    """Retrieve all the units that belongs to a company
+
+    Args:
+        client      : the Client instance
+        company_id  : the ID of the company for the search
+        limit       : limit the number of records
+
+    Raises:
+        ConnectionError, BadRequest, NotFound, InternalServerError
+
+    Returns:
+        An iterator to a Unit object
+    """
+    offset = 1
+    url = client._url('companies', path=f"{company_id}/units")
+
+    if limit > MAX_SEARCH_LIMIT:
+        limit = MAX_SEARCH_LIMIT
+
+    while True:
+        # prepare the parameters
+        params = {
+            'offset': offset,
+            'limit': limit
+        }
+
+        try:
+            response = client._get(url, params)
+            data = response.json()
+
+        except Exception as e:
+            raise exceptions.ConnectionError(e)
+
+        if response.status_code == 200:
+            for item in data['units']:
+                yield item
+
+            if int(data['count']) < int(data['limit']):
+                break
+            else:
+                offset += int(data['count'])
+
+        else:
+            # raise the proper exception depending on the status code
+            exception = client._exception(response.status_code)
+            raise exception(data['error']['message'])
+
+
+@Client.endpoint
+def deleteCompanyUnits(client: Client, *, company_id: int) -> bool:
+    """Delete all the units that belongs to a company
+
+    Args:
+        client      : the Client instance
+        company_id  : the ID of the company for the search
+
+    Raises:
+        ConnectionError, NotFound, InternalServerError
+
+    Returns:
+        True if all the objects have been deleted
+    """
+    url = client._url('companies', path=f"{company_id}/units")
+
+    try:
+        response = client._delete(url)
+
+    except Exception as e:
+        raise exceptions.ConnectionError(e)
+
+    if response.status_code == 204:
+        return True
+
+    # raise the proper exception depending on the status code
+    exception = client._exception(response.status_code)
+    data = response.json()
+    raise exception(data['error']['message'])
