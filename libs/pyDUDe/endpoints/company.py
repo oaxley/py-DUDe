@@ -265,7 +265,7 @@ def createCompanyUnit(client: Client, *, company_id: int, name: str) -> int:
         ConnectionError, BadRequest, NotFound, InternalServerError
 
     Returns:
-        True if the company has been deleted
+        The ID of the new Unit
     """
     url = client._url('companies', path=f"{company_id}/units")
     body = {
