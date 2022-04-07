@@ -244,3 +244,43 @@ def deleteSingleCompany(client: Client, *, company_id: int) -> bool:
     exception = client._exception(response.status_code)
     data = response.json()
     raise exception(data['error']['message'])
+
+
+#
+# Company / Units
+#
+
+@Client.endpoint
+def createCompanyUnit(client: Client, *, company_id: int, name: str) -> int:
+    """Create a new unit and associate it with this company
+
+    Args
+        client      : the Client instance
+        company_id  : ID of the company
+        name        : name of the unit
+
+    Raises:
+        ConnectionError, BadRequest, NotFound, InternalServerError
+
+    Returns:
+        True if the company has been deleted
+    """
+    url = client._url('companies', path=f"{company_id}/units")
+    body = {
+        'name': name
+    }
+
+    try:
+        response = client._post(url, body)
+        data = response.json()
+
+    except Exception as e:
+        raise exceptions.ConnectionError(e)
+
+    if response.status_code == 201:
+        return int(data['id'])
+
+    # raise the proper exception depending on the status code
+    exception = client._exception(response.status_code)
+    raise exception(data['error']['message'])
+
