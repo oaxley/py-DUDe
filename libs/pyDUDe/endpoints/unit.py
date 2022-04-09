@@ -299,7 +299,7 @@ def getUnitTeams(client: Client, *, unit_id: int, limit = DEFAULT_SEARCH_LIMIT) 
     Args:
         client  : the Client instance
         unit_id : ID of the unit
-        limit       : limit the number of records
+        limit   : limit the number of records
 
     Raises:
         ConnectionError, BadRequest, NotFound, InternalServerError
@@ -344,12 +344,11 @@ def getUnitTeams(client: Client, *, unit_id: int, limit = DEFAULT_SEARCH_LIMIT) 
 
 @Client.endpoint
 def deleteUnitTeams(client: Client, *, unit_id: int) -> bool:
-    """Deelte all the teams that belongs to a unit
+    """Delete all the teams that belongs to a unit
 
     Args:
         client  : the Client instance
         unit_id : ID of the unit
-        name    : name of the team
 
     Raises:
         ConnectionError, NotFound, InternalServerError
