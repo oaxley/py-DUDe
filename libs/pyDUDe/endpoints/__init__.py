@@ -16,3 +16,6 @@ from . import generic
 from . import company
 from . import unit
 from . import team
+from . import team_software
+from . import team_users
+from . import team_rights
