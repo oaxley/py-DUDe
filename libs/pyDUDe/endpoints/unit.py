@@ -48,7 +48,7 @@ def createUnit(client: Client, *, company_id: int, name: str) -> int:
         BadRequest, NotFound, InternalServerError
 
     Returns:
-        The Id of the new company
+        The Id of the new Unit
     """
     url = client._url('units')
     body = {
@@ -223,7 +223,7 @@ def updateSingleUnit(client: Client, *, unit_id: int, name: Optional[str] = None
 
 
 @Client.endpoint
-def deleteSingleUnit(client: Client, *, unit_id: int) -> T_Unit:
+def deleteSingleUnit(client: Client, *, unit_id: int) -> bool:
     """Delete a specific unit
 
     Args:
