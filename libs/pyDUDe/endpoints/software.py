@@ -44,7 +44,7 @@ def createSoftware(client: Client, *, team_id: int, name: str) -> int:
         name    : the name of the new software to create
 
     Raises:
-        BadRequest, NotFound, InternalServerError
+        ConnectionError, BadRequest, NotFound, InternalServerError
 
     Returns:
         The Id of the new software
@@ -157,7 +157,7 @@ def getSingleSoftware(client: Client, *, software_id: int) -> T_Software:
     """Retrieve details for a specific software
 
     Args:
-        client  : the Client instance
+        client      : the Client instance
         software_id : ID of the software
 
     Raises:
@@ -189,13 +189,13 @@ def updateSingleSoftware(client: Client, *, software_id: int, name: Optional[str
     """Update details for a specific software
 
     Args:
-        client  : the Client instance
+        client      : the Client instance
         software_id : ID of the software
-        name    : the new name for this software
-        team_id : the new team ID for this software
+        name        : the new name for this software
+        team_id     : the new team ID for this software
 
     Raises:
-        ConnectionError, NotFound, InternalServerError
+        ConnectionError, BadRequest, NotFound, InternalServerError
 
     Returns:
         True if the software has been updated

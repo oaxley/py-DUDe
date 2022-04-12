@@ -44,7 +44,7 @@ def createRight(client: Client, *, team_id: int, name: str) -> int:
         name    : the name of the new right to create
 
     Raises:
-        BadRequest, NotFound, InternalServerError
+        BadRequest, BadRequest, NotFound, InternalServerError
 
     Returns:
         The Id of the new right

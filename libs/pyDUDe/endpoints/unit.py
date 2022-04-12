@@ -45,7 +45,7 @@ def createUnit(client: Client, *, company_id: int, name: str) -> int:
         name        : the name of the new unit to create
 
     Raises:
-        BadRequest, NotFound, InternalServerError
+        ConnectionError, BadRequest, NotFound, InternalServerError
 
     Returns:
         The Id of the new Unit
@@ -193,7 +193,7 @@ def updateSingleUnit(client: Client, *, unit_id: int, name: Optional[str] = None
         company_id  : the new company ID for this unit
 
     Raises:
-        ConnectionError, NotFound, InternalServerError
+        ConnectionError, badRequest, NotFound, InternalServerError
 
     Returns:
         True if the unit has been updated

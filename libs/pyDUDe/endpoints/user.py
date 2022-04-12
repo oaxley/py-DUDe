@@ -45,7 +45,7 @@ def createUser(client: Client, *, team_id: int, name: str, email: str) -> int:
         email   : the email associated with this user
 
     Raises:
-        BadRequest, NotFound, InternalServerError
+        ConnectionError, BadRequest, BadRequest, NotFound, InternalServerError
 
     Returns:
         The Id of the new user
@@ -198,7 +198,7 @@ def updateSingleUser(client: Client, *, user_id: int, name: Optional[str] = None
         team_id : the new team ID for this user
 
     Raises:
-        ConnectionError, NotFound, InternalServerError
+        ConnectionError, BadRequest, NotFound, InternalServerError
 
     Returns:
         True if the user has been updated
