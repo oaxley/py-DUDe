@@ -19,3 +19,4 @@ from . import team
 from . import team_software
 from . import team_users
 from . import team_rights
+from . import user
