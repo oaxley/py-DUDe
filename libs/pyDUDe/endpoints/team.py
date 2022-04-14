@@ -35,12 +35,12 @@ T_Team = Dict[str, Any]
 #
 
 @Client.endpoint
-def createTeam(client: Client, *, team_id: int, name: str) -> int:
-    """Create a new team
+def createTeam(client: Client, *, unit_id: int, name: str) -> int:
+    """Create a new team and associate it with the unit
 
     Args:
         client  : the Client instance
-        team_id : the ID of the unit to associate this team with
+        unit_id : the ID of the unit to associate this team with
         name    : the name of the new team to create
 
     Raises:
@@ -53,7 +53,7 @@ def createTeam(client: Client, *, team_id: int, name: str) -> int:
     url = client._url('teams')
     body = {
         'name': name,
-        'team_id': team_id
+        'unit_id': unit_id
     }
 
     try:
