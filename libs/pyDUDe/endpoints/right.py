@@ -195,7 +195,7 @@ def updateSingleRight(client: Client, *, right_id: int, name: Optional[str] = No
         team_id : the new team ID for this right
 
     Raises:
-        ConnectionError, NotFound, InternalServerError
+        ConnectionError, BadRequest, NotFound, InternalServerError
 
     Returns:
         True if the right has been updated

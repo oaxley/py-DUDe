@@ -45,7 +45,7 @@ def createUser(client: Client, *, team_id: int, name: str, email: str) -> int:
         email   : the email associated with this user
 
     Raises:
-        ConnectionError, BadRequest, BadRequest, NotFound, InternalServerError
+        ConnectionError, BadRequest, NotFound, InternalServerError
 
     Returns:
         The Id of the new user

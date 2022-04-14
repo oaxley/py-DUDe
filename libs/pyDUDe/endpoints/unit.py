@@ -37,7 +37,7 @@ T_Team = Dict[str, Any]
 
 @Client.endpoint
 def createUnit(client: Client, *, company_id: int, name: str) -> int:
-    """Create a new company
+    """Create a new unit
 
     Args:
         client      : the Client instance

@@ -44,7 +44,7 @@ def createTeam(client: Client, *, team_id: int, name: str) -> int:
         name    : the name of the new team to create
 
     Raises:
-        BadRequest, NotFound, InternalServerError
+        ConnectionError, BadRequest, NotFound, InternalServerError
 
     Returns:
         The Id of the new team
@@ -154,17 +154,17 @@ def deleteAllTeams(client: Client) -> bool:
 
 @Client.endpoint
 def getSingleTeam(client: Client, *, team_id: int) -> T_Team:
-    """Retrieve details for a specific unit
+    """Retrieve details for a specific team
 
     Args:
         client  : the Client instance
-        team_id : ID of the unit
+        team_id : ID of the team
 
     Raises:
         ConnectionError, NotFound, InternalServerError
 
     Returns:
-        The details for the unit
+        The details for the team
     """
     url = client._url('teams', path=f"{team_id}")
 
@@ -194,7 +194,7 @@ def updateSingleTeam(client: Client, *, team_id: int, name: Optional[str] = None
         unit_id : the new company ID for this unit
 
     Raises:
-        ConnectionError, NotFound, InternalServerError
+        ConnectionError, BadRequest, NotFound, InternalServerError
 
     Returns:
         True if the team has been updated
