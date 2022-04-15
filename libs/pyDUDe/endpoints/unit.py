@@ -183,14 +183,13 @@ def getSingleUnit(client: Client, *, unit_id: int) -> T_Unit:
 
 
 @Client.endpoint
-def updateSingleUnit(client: Client, *, unit_id: int, name: Optional[str] = None, company_id: Optional[int] = None) -> bool:
+def updateSingleUnit(client: Client, *, unit_id: int, name: Optional[str] = None) -> bool:
     """Update details for a specific unit
 
     Args:
         client      : the Client instance
         unit_id     : ID of the unit
         name        : the new name for this unit
-        company_id  : the new company ID for this unit
 
     Raises:
         ConnectionError, badRequest, NotFound, InternalServerError
@@ -203,9 +202,6 @@ def updateSingleUnit(client: Client, *, unit_id: int, name: Optional[str] = None
 
     if name:
         body['name'] = name
-
-    if company_id:
-        body['company_id'] = company_id
 
     try:
         response = client._put(url, body)
