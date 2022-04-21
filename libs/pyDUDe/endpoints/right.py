@@ -184,15 +184,13 @@ def getSingleRight(client: Client, *, right_id: int) -> T_Right:
 
 
 @Client.endpoint
-def updateSingleRight(client: Client, *, right_id: int, name: Optional[str] = None,
-                      team_id: Optional[int] = None) -> bool:
+def updateSingleRight(client: Client, *, right_id: int, name: Optional[str] = None) -> bool:
     """Update details for a specific right
 
     Args:
         client  : the Client instance
         right_id : ID of the right
         name    : the new name for this right
-        team_id : the new team ID for this right
 
     Raises:
         ConnectionError, BadRequest, NotFound, InternalServerError
@@ -205,9 +203,6 @@ def updateSingleRight(client: Client, *, right_id: int, name: Optional[str] = No
 
     if name:
         body['name'] = name
-
-    if team_id:
-        body['team_id'] = team_id
 
     try:
         response = client._put(url, body)
