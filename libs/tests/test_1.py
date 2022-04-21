@@ -15,9 +15,7 @@ class CompanyTest(unittest.TestCase):
 
     def setUp(self) -> None:
         self.client = pyDUDe.Client()
-        self.client.config.hostname = 'localhost'
-        self.client.config.root_ca = '../certs/root/root_ca.cert.pem'
-        self.client.config.x_api_token = 'my-secret-key'
+        self.client.config.readFile()
 
         # remove the file
         try:
@@ -27,10 +25,7 @@ class CompanyTest(unittest.TestCase):
 
         # restart the server
         os.kill(int(os.environ['DUDE_SERVER_PID']), 1)
-
-        # wait for the server to start
-        time.sleep(1)
-
+        time.sleep(float(os.environ['DUDE_SERVER_WAIT_TIME']))
 
     def test_create_company(self):
         cid = self.client.createCompany(name='ACME Corp')

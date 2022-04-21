@@ -15,9 +15,7 @@ class TeamTest(unittest.TestCase):
 
     def setUp(self) -> None:
         self.client = pyDUDe.Client()
-        self.client.config.hostname = 'localhost'
-        self.client.config.root_ca = '../certs/root/root_ca.cert.pem'
-        self.client.config.x_api_token = 'my-secret-key'
+        self.client.config.readFile()
 
         # remove the file
         try:
@@ -27,8 +25,7 @@ class TeamTest(unittest.TestCase):
 
         # restart the server
         os.kill(int(os.environ['DUDE_SERVER_PID']), 1)
-
-        time.sleep(1)
+        time.sleep(float(os.environ['DUDE_SERVER_WAIT_TIME']))
 
     def test_create_team(self):
         cid = self.client.createCompany(name='ACME Corp')
