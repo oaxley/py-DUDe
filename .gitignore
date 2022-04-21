@@ -8,5 +8,7 @@
 certs/**
 !certs/Makefile
 
-# remove pyenv file
+# remove development files
 .python-version
+**/.env
+**/.envrc
