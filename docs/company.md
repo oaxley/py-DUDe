@@ -34,9 +34,6 @@
 
 ### **Delete all the companies and their children**
 
-    Args:
-        client: the Client instance
-
     Raises:
         ConnectionError, InternalServerError
 
