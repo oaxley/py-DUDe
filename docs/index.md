@@ -65,7 +65,7 @@ These functions help you manage the company data
 
 ---
 
-## [Team](./team.md) 🔒
+## **[Team](./team.md) 🔒**
 
 > _createTeam(*, unit_id: int, name: str) -> int_  
 > Create a new team and associate it with the unit
@@ -87,7 +87,7 @@ These functions help you manage the company data
 
 ---
 
-## [Team/User](./team_user.md) 🔒
+## **[Team/User](./team_user.md) 🔒**
 
 > _createTeamUser(*, team_id: int, name: str, email: str) -> int_  
 > Create a new User and associate it with this team
@@ -100,7 +100,7 @@ These functions help you manage the company data
 
 ---
 
-## [Team/Right](./team_right.md) 🔒
+## **[Team/Right](./team_right.md) 🔒**
 
 > _createTeamRight(*, team_id: int, name: str) -> int_  
 > Create a new Right and associate it with this team
@@ -113,7 +113,7 @@ These functions help you manage the company data
 
 ---
 
-## [Team/Software](./team_software.md) 🔒
+## **[Team/Software](./team_software.md) 🔒**
 
 > _createTeamSoftware(*, team_id: int, name: str) -> int_  
 > Create a new Software and associate it with this team
