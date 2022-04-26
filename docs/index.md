@@ -65,3 +65,61 @@ These functions help you manage the company data
 
 ---
 
+## [Team](./team.md) 🔒
+
+> _createTeam(*, unit_id: int, name: str) -> int_  
+> Create a new team and associate it with the unit
+
+> _getAllTeams(*, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Team]_  
+> Retrieve all the teams
+
+> _deleteAllTeams(client: Client) -> bool_  
+> Delete all the teams and their children
+
+> _getSingleTeam(*, team_id: int) -> T_Team_  
+> Retrieve details for a specific team
+
+> _updateSingleTeam(*, team_id: int, name: Optional[str] = None, unit_id: Optional[int] = None) -> bool_  
+> Update details for a specific team
+
+> _deleteSingleTeam(*, team_id: int) -> bool_  
+> Delete a specific team
+
+---
+
+## [Team/User](./team_user.md) 🔒
+
+> _createTeamUser(*, team_id: int, name: str, email: str) -> int_  
+> Create a new User and associate it with this team
+
+> _getTeamUsers(*, team_id: int, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_User]_  
+> Retrieve all the Users that belongs to a team
+
+> _deleteTeamUsers(*, team_id: int) -> bool_  
+> Delete all the users that belongs to a team
+
+---
+
+## [Team/Right](./team_right.md) 🔒
+
+> _createTeamRight(*, team_id: int, name: str) -> int_  
+> Create a new Right and associate it with this team
+
+> _getTeamRights(*, team_id: int, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Right]_  
+> Retrieve all the Rights that belongs to a team
+
+> _deleteTeamRights(*, team_id: int) -> bool_  
+> Delete all the Rights that belongs to a team
+
+---
+
+## [Team/Software](./team_software.md) 🔒
+
+> _createTeamSoftware(*, team_id: int, name: str) -> int_  
+> Create a new Software and associate it with this team
+
+> _getTeamSoftware(*, team_id: int, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Software]_  
+> Retrieve all the Software that belongs to a team
+
+> _deleteTeamSoftware(*, team_id: int) -> bool_  
+> Delete all the software that belongs to a team
