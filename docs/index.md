@@ -123,3 +123,27 @@ These functions help you manage the company data
 
 > _deleteTeamSoftware(*, team_id: int) -> bool_  
 > Delete all the software that belongs to a team
+
+---
+
+## **[User](./user.md) 🔒**
+
+
+> _createUser(*, team_id: int, name: str, email: str) -> int_  
+> Create a new user
+
+> _getAllUsers(*, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_User]_  
+> Retrieve all users
+
+> _deleteAllUsers() -> bool_  
+> Delete all users and their children
+
+> _getSingleUser(*, user_id: int) -> T_User_  
+> Retrieve details for a specific user
+
+> _updateSingleUser(*, user_id: int, name: Optional[str] = None, email: Optional[str] = None, team_id: Optional[int] = None) -> bool_  
+> Update details for a specific user
+
+> _deleteSingleUser(*, user_id: int) -> bool_  
+> Delete a specific user
+
