@@ -168,3 +168,25 @@ These functions help you manage the company data
 
 > _deleteSingleRight(*, right_id: int) -> bool_  
 > Delete a specific right
+
+---
+
+## **[Software](./software.md) 🔒**
+
+> _createSoftware(*, team_id: int, name: str) -> int_  
+> Create a new software
+
+> _getAllSoftware(*, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Software]_  
+> Retrieve all the software
+
+> _deleteAllSoftware() -> bool_  
+> Delete all the software and their children
+
+> _getSingleSoftware(*, software_id: int) -> T_Software_  
+> Retrieve details for a specific software
+
+> _updateSingleSoftware(*, software_id: int, name: Optional[str] = None, team_id: Optional[int] = None) -> bool_  
+> Update details for a specific software
+
+> _deleteSingleSoftware(*, software_id: int) -> bool_  
+> Delete a specific software
