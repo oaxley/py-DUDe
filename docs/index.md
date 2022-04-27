@@ -147,3 +147,24 @@ These functions help you manage the company data
 > _deleteSingleUser(*, user_id: int) -> bool_  
 > Delete a specific user
 
+---
+
+## **[Right](./right.md) 🔒**
+
+> _createRight(*, team_id: int, name: str) -> int_  
+> Create a new right
+
+> _getAllRights(*, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Right]_  
+> Retrieve all rights
+
+> _deleteAllRights() -> bool_  
+> Delete all rights and their children
+
+> _getSingleRight(*, right_id: int) -> T_Right_  
+> Retrieve details for a specific right
+
+> _updateSingleRight(*, right_id: int, name: Optional[str] = None) -> bool_  
+> Update details for a specific right
+
+> _deleteSingleRight(*, right_id: int) -> bool_  
+> Delete a specific right
