@@ -190,3 +190,16 @@ These functions help you manage the company data
 
 > _deleteSingleSoftware(*, software_id: int) -> bool_  
 > Delete a specific software
+
+---
+
+## **[Generic](./generic.md)**
+
+>  _version() -> Optional[str]_  
+> Return the current API version
+
+>  _authenticate(*, appname: str, apikey: str) -> Optional[str]_  
+> Authenticate an application
+
+>  _validate(*, email: str, right: str, token: str) -> bool_  
+> Validate a user for a specific right
