@@ -1,9 +1,9 @@
 # Company functions
 
 
+### **Create a new company**
 _createCompany(*, name: str) -> int_
 
-### **Create a new company**
 
     Args:
         name    : the name of the new company to create
@@ -15,9 +15,9 @@ _createCompany(*, name: str) -> int_
         The Id of the new company
 
 
-_getAllCompanies(*, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Company]_
 
 ### **Retrieve all the companies**
+_getAllCompanies(*, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Company]_
 
     Args:
         limit   : limit the number of records
@@ -30,9 +30,9 @@ _getAllCompanies(*, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Company]_
 
 
 
-_deleteAllCompanies() -> bool_
 
 ### **Delete all the companies and their children**
+_deleteAllCompanies() -> bool_
 
     Raises:
         ConnectionError, InternalServerError
@@ -42,9 +42,9 @@ _deleteAllCompanies() -> bool_
 
 
 
-_getSingleCompany(*, company_id: int) -> T_Company_
 
 ### **Retrieve details for a specific company**
+_getSingleCompany(*, company_id: int) -> T_Company_
 
     Args:
         company_id  : ID of the company
@@ -56,9 +56,9 @@ _getSingleCompany(*, company_id: int) -> T_Company_
         The detail for the company
 
 
-_updateSingleCompany(*, name: str, company_id: int) -> bool_
 
 ### **Update details for a specific company**
+_updateSingleCompany(*, name: str, company_id: int) -> bool_
 
     Args:
         name        : the new name for this company
@@ -71,9 +71,9 @@ _updateSingleCompany(*, name: str, company_id: int) -> bool_
         True if the record has been updated
 
 
-_deleteSingleCompany(*, company_id: int) -> bool_
 
 ### **Delete a single company**
+_deleteSingleCompany(*, company_id: int) -> bool_
 
     Args:
         company_id  : ID of the company
@@ -85,9 +85,9 @@ _deleteSingleCompany(*, company_id: int) -> bool_
         True if the company has been deleted
 
 
-_createCompanyUnit(*, company_id: int, name: str) -> int_
 
 ### **Create a new unit and associate it with this company**
+_createCompanyUnit(*, company_id: int, name: str) -> int_
 
     Args
         company_id  : ID of the company
@@ -100,9 +100,9 @@ _createCompanyUnit(*, company_id: int, name: str) -> int_
         The ID of the new Unit
 
 
-_getCompanyUnits(*, company_id: int, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Unit]_
 
 ### **Retrieve all the units that belongs to a company**
+_getCompanyUnits(*, company_id: int, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Unit]_
 
     Args:
         company_id  : the ID of the company for the search
@@ -115,9 +115,9 @@ _getCompanyUnits(*, company_id: int, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T
         An iterator to a Unit object
 
 
-_deleteCompanyUnits(*, company_id: int) -> bool_
 
 ### **Delete all the units that belongs to a company**
+_deleteCompanyUnits(*, company_id: int) -> bool_
 
     Args:
         company_id  : the ID of the company for the search

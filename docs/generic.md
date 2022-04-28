@@ -1,8 +1,8 @@
 # Generic functions
 
-## _version() -> Optional[str]_
 
 ### **Return the current API version**
+_version() -> Optional[str]_
 
     Raises:
         ConnectionError, InternalServerError
@@ -12,9 +12,9 @@
 
 
 
-## _authenticate(*, appname: str, apikey: str) -> Optional[str]_
 
 ### **Authenticate an application**
+_authenticate(*, appname: str, apikey: str) -> Optional[str]_
 
     Args:
         appname: the application name
@@ -28,9 +28,9 @@
 
 
 
-## _validate(*, email: str, right: str, token: str) -> bool_
 
 ### **Validate a user for a specific right**
+_validate(*, email: str, right: str, token: str) -> bool_
 
     Args:
         email: the user's email
