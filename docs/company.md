@@ -1,7 +1,7 @@
 # Company functions
 
 
-## _createCompany(*, name: str) -> int_
+_createCompany(*, name: str) -> int_
 
 ### **Create a new company**
 
@@ -15,7 +15,7 @@
         The Id of the new company
 
 
-## _getAllCompanies(*, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Company]_
+_getAllCompanies(*, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Company]_
 
 ### **Retrieve all the companies**
 
@@ -30,7 +30,7 @@
 
 
 
-## _deleteAllCompanies() -> bool_
+_deleteAllCompanies() -> bool_
 
 ### **Delete all the companies and their children**
 
@@ -42,7 +42,7 @@
 
 
 
-## _getSingleCompany(*, company_id: int) -> T_Company_
+_getSingleCompany(*, company_id: int) -> T_Company_
 
 ### **Retrieve details for a specific company**
 
@@ -56,7 +56,7 @@
         The detail for the company
 
 
-## _updateSingleCompany(*, name: str, company_id: int) -> bool_
+_updateSingleCompany(*, name: str, company_id: int) -> bool_
 
 ### **Update details for a specific company**
 
@@ -71,7 +71,7 @@
         True if the record has been updated
 
 
-## _deleteSingleCompany(*, company_id: int) -> bool_
+_deleteSingleCompany(*, company_id: int) -> bool_
 
 ### **Delete a single company**
 
@@ -85,7 +85,7 @@
         True if the company has been deleted
 
 
-## _createCompanyUnit(*, company_id: int, name: str) -> int_
+_createCompanyUnit(*, company_id: int, name: str) -> int_
 
 ### **Create a new unit and associate it with this company**
 
@@ -100,7 +100,7 @@
         The ID of the new Unit
 
 
-## _getCompanyUnits(*, company_id: int, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Unit]_
+_getCompanyUnits(*, company_id: int, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Unit]_
 
 ### **Retrieve all the units that belongs to a company**
 
@@ -115,7 +115,7 @@
         An iterator to a Unit object
 
 
-## _deleteCompanyUnits(*, company_id: int) -> bool_
+_deleteCompanyUnits(*, company_id: int) -> bool_
 
 ### **Delete all the units that belongs to a company**
 
