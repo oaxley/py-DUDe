@@ -1,7 +1,7 @@
 # Team functions
 
-## _createTeam(*, unit_id: int, name: str) -> int_
 ### **Create a new team and associate it with the unit**
+_createTeam(*, unit_id: int, name: str) -> int_
 
     Args:
         unit_id : the ID of the unit to associate this team with
@@ -13,8 +13,8 @@
     Returns:
         The Id of the new team
 
-## _getAllTeams(*, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Team]_
 ### **Retrieve all the teams**
+_getAllTeams(*, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Team]_
 
     Args:
         limit   : limit the number of records
@@ -25,8 +25,8 @@
     Returns:
         An iterator to a Team object
 
-## _deleteAllTeams(client: Client) -> bool_
 ### **Delete all the teams and their children**
+_deleteAllTeams(client: Client) -> bool_
 
     Raises:
         ConnectionError, InternalServerError
@@ -34,8 +34,8 @@
     Returns:
         True if all the teams have been deleted
 
-## _getSingleTeam(*, team_id: int) -> T_Team_
 ### **Retrieve details for a specific team**
+_getSingleTeam(*, team_id: int) -> T_Team_
 
     Args:
         team_id : ID of the team
@@ -46,8 +46,8 @@
     Returns:
         The details for the team
 
-## _updateSingleTeam(*, team_id: int, name: Optional[str] = None, unit_id: Optional[int] = None) -> bool_
 ### **Update details for a specific team**
+_updateSingleTeam(*, team_id: int, name: Optional[str] = None, unit_id: Optional[int] = None) -> bool_
 
     Args:
         team_id : ID of the team
@@ -60,8 +60,8 @@
     Returns:
         True if the team has been updated
 
-## _deleteSingleTeam(*, team_id: int) -> bool_
 ### **Delete a specific team**
+_deleteSingleTeam(*, team_id: int) -> bool_
 
     Args:
         team_id : ID of the team

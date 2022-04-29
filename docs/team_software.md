@@ -1,8 +1,8 @@
 # Team / Software functions
 
-## _createTeamSoftware(*, team_id: int, name: str) -> int_
 
 ### **Create a new Software and associate it with this team**
+_createTeamSoftware(*, team_id: int, name: str) -> int_
 
     Args:
         team_id : ID of the team
@@ -15,9 +15,9 @@
         The ID of the new software
 
 
-## _getTeamSoftware(*, team_id: int, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Software]_
 
 ### **Retrieve all the Software that belongs to a team**
+_getTeamSoftware(*, team_id: int, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Software]_
 
     Args:
         team_id : ID of the team
@@ -30,9 +30,9 @@
         An iterator to a Software object
 
 
-## _deleteTeamSoftware(*, team_id: int) -> bool_
 
 ### **Delete all the software that belongs to a team**
+_deleteTeamSoftware(*, team_id: int) -> bool_
 
     Args:
         team_id : ID of the team

@@ -1,8 +1,8 @@
 # Team / Right functions
 
-## _createTeamRight(*, team_id: int, name: str) -> int_
 
 ### **Create a new Right and associate it with this team**
+_createTeamRight(*, team_id: int, name: str) -> int_
 
     Args:
         team_id : ID of the team
@@ -14,9 +14,9 @@
     Returns:
         The ID of the new rights
 
-## _getTeamRights(*, team_id: int, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Right]_
 
 ### **Retrieve all the Rights that belongs to a team**
+_getTeamRights(*, team_id: int, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Right]_
 
     Args:
         team_id : ID of the team
@@ -29,9 +29,9 @@
         An iterator to a Rights object
 
 
-## _deleteTeamRights(*, team_id: int) -> bool_
 
 ### **Delete all the Rights that belongs to a team**
+_deleteTeamRights(*, team_id: int) -> bool_
 
     Args:
         team_id : ID of the team

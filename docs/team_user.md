@@ -1,8 +1,8 @@
 # Team / User functions
 
-## _createTeamUser(*, team_id: int, name: str, email: str) -> int_
 
 ### **Create a new User and associate it with this team**
+_createTeamUser(*, team_id: int, name: str, email: str) -> int_
 
     Args:
         team_id : ID of the team
@@ -16,9 +16,9 @@
         The ID of the new users
 
 
-## _getTeamUsers(*, team_id: int, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_User]_
 
 ### **Retrieve all the Users that belongs to a team**
+_getTeamUsers(*, team_id: int, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_User]_
 
     Args:
         team_id : ID of the team
@@ -31,9 +31,9 @@
         An iterator to a Users object
 
 
-## _deleteTeamUsers(*, team_id: int) -> bool_
 
 ### **Delete all the users that belongs to a team**
+_deleteTeamUsers(*, team_id: int) -> bool_
 
     Args:
         team_id : ID of the team

@@ -1,8 +1,8 @@
 # User functions
 
-## _createUser(*, team_id: int, name: str, email: str) -> int_
 
 ### **Create a new user**
+_createUser(*, team_id: int, name: str, email: str) -> int_
 
     Args:
         team_id : the ID of the team to associate this user with
@@ -15,9 +15,9 @@
     Returns:
         The Id of the new user
 
-## _getAllUsers(*, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_User]_
 
 ### **Retrieve all users**
+_getAllUsers(*, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_User]_
 
     Args:
         limit   : limit the number of records
@@ -29,9 +29,9 @@
         An iterator to a User object
 
 
-## _deleteAllUsers() -> bool_
 
 ### **Delete all users and their children**
+_deleteAllUsers() -> bool_
 
     Raises:
         ConnectionError, InternalServerError
@@ -40,9 +40,9 @@
         True if all the users have been deleted
 
 
-## _getSingleUser(*, user_id: int) -> T_User_
 
 ### **Retrieve details for a specific user**
+_getSingleUser(*, user_id: int) -> T_User_
 
     Args:
         user_id : ID of the user
@@ -54,9 +54,9 @@
         The details for the unit
 
 
-## _updateSingleUser(*, user_id: int, name: Optional[str] = None, email: Optional[str] = None, team_id: Optional[int] = None) -> bool_
 
 ### **Update details for a specific user**
+_updateSingleUser(*, user_id: int, name: Optional[str] = None, email: Optional[str] = None, team_id: Optional[int] = None) -> bool_
 
     Args:
         user_id : ID of the user
@@ -71,9 +71,9 @@
         True if the user has been updated
 
 
-## _deleteSingleUser(*, user_id: int) -> bool_
 
 ### **Delete a specific user**
+_deleteSingleUser(*, user_id: int) -> bool_
 
     Args:
         user_id : ID of the user

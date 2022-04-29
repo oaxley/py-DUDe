@@ -1,8 +1,8 @@
 # Software functions
 
-## _createSoftware(*, team_id: int, name: str) -> int_
 
 ### **Create a new software**
+_createSoftware(*, team_id: int, name: str) -> int_
 
     Args:
         team_id : the ID of the team to associate this software with
@@ -17,9 +17,9 @@
 
 
 
-## _getAllSoftware(*, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Software]_
 
 ### **Retrieve all the software**
+_getAllSoftware(*, limit = DEFAULT_SEARCH_LIMIT) -> Iterator[T_Software]_
 
     Args:
         limit   : limit the number of records
@@ -31,9 +31,9 @@
         An iterator to a Software object
 
 
-## _deleteAllSoftware() -> bool_
 
 ### **Delete all the software and their children**
+_deleteAllSoftware() -> bool_
 
     Raises:
         ConnectionError, InternalServerError
@@ -42,9 +42,9 @@
         True if all the software have been deleted
 
 
-## _getSingleSoftware(*, software_id: int) -> T_Software_
 
 ### **Retrieve details for a specific software**
+_getSingleSoftware(*, software_id: int) -> T_Software_
 
     Args:
         software_id : ID of the software
@@ -56,9 +56,9 @@
         The details for the unit
 
 
-## _updateSingleSoftware(*, software_id: int, name: Optional[str] = None, team_id: Optional[int] = None) -> bool_
 
 ### **Update details for a specific software**
+_updateSingleSoftware(*, software_id: int, name: Optional[str] = None, team_id: Optional[int] = None) -> bool_
 
     Args:
         software_id : ID of the software
@@ -72,9 +72,9 @@
         True if the software has been updated
 
 
-## _deleteSingleSoftware(*, software_id: int) -> bool_
 
 ### **Delete a specific software**
+_deleteSingleSoftware(*, software_id: int) -> bool_
 
     Args:
         software_id : ID of the software
